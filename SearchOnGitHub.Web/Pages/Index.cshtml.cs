@@ -20,17 +20,17 @@ namespace SearchOnGitHub.Web.Pages
 
         public string Cards { get; private set; }
         
-        public async void OnPost(string searchText)
+        public async Task<IActionResult> OnPost(string searchText)
         {
             try
             {
                 var result = await GithubManager.GetSearchCardsAsync(_context, searchText);
 
-                RedirectToPage("SearchQueries", new {result});
+                return RedirectToPage("SearchQueries", new {result});
             }
             catch (Exception exc)
             {
-                return;
+                return BadRequest();
             }
         }
 
