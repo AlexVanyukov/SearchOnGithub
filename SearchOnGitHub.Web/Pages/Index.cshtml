@@ -3,21 +3,15 @@
 @{
     ViewData["Title"] = "Поиск";
 }
-<h2>@Model.Message</h2>
-<form method="post">
-    <input type="text" name="username" />
-    <input type="submit" value="Отправить" />
-</form>
 
-
-<!--div class="text-center">
-    <form>
+<div class="text-center" >
+    <form method="post">
         <div>
-            <label for="exampleInputPassword1" class="form-label">Поиск по GitHub</label>
+            <label class="form-label">Поиск по GitHub</label>
         </div>
         <div>
-            <input type="text" class="form-control" id="InputText">
-            <button type="submit" class="ButtonSearch">Поиск</button>
+            <input type="text" name="searchText">
+            <input type="submit" value="Поиск" />
         </div>
     </form>
-</div-->
+</div>

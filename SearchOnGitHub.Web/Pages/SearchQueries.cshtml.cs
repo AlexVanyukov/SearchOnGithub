@@ -1,23 +1,38 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using System.Xml.Linq;
+using Logic.Managers;
+using Infrastructure.Data;
 
 namespace SearchOnGitHub.Web.Pages
 {
     public class SearchQueriesModel : PageModel
     {
         private readonly ILogger<SearchQueriesModel> _logger;
+        private readonly SearchOnGithubContext _context;
 
-        public SearchQueriesModel(ILogger<SearchQueriesModel> logger)
+        public SearchQueriesModel(ILogger<SearchQueriesModel> logger, SearchOnGithubContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public string Message { get; private set; } = "";
+        public string Cards { get; private set; }
 
-        public void OnGet(string name)
+        public async void Set(string searchText)
         {
-            Message = $"Name: {name}";
+            try
+            {
+                var result = await GithubManager.GetSearchCardsAsync(_context, searchText);
+                var qwe = JsonSerializer.Serialize(result);
+                return;
+            }
+            catch (Exception exc)
+            {
+                return;
+            }
         }
     }
 }

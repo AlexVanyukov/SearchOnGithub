@@ -1,26 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
+using Logic.Managers;
+using Infrastructure.Data;
+
 
 namespace SearchOnGitHub.Web.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<IndexModel> _logger; 
+        private readonly SearchOnGithubContext _context;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, SearchOnGithubContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public string Message { get; private set; } = "";
-        public void OnGet()
+        public string Cards { get; private set; }
+        
+        public async void OnPost(string searchText)
         {
-            Message = "Введите свое имя";
+            try
+            {
+                var result = await GithubManager.GetSearchCardsAsync(_context, searchText);
+
+                RedirectToPage("SearchQueries", new {result});
+            }
+            catch (Exception exc)
+            {
+                return;
+            }
         }
 
-        public void OnPost(string username)
-        {
-            Message = $"Ваше имя: {username}";
-        }
+
     }
 }

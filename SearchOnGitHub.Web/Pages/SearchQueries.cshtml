@@ -1,17 +1,29 @@
 ﻿@page
-@model IndexModel
+@model SearchQueriesModel
 @{
     ViewData["Title"] = "Поиск";
 }
 
-<div class="text-center">
-    <form>
-        <div>
-            <label for="exampleInputPassword1" class="form-label">Поиск по GitHub</label>
-        </div>
-        <div>
-            <input type="text" class="form-control" id="InputText">
-            <button type="submit" class="ButtonSearch">Поиск</button>
-        </div>
-    </form>
 </div>
+    <div class="text-center">
+        <form method="post">
+            <div>
+                <label class="form-label">Поиск по GitHub</label>
+            </div>
+            <div>
+                <input type="text" name="searchText">
+                <input type="submit" value="Поиск" />
+            </div>
+        </form>
+    </div>
+    <div class="text-center">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="card-link">Card link</a>
+            </div>
+        </div>
+    </div>
+</div>
+

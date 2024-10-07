@@ -1,25 +1,33 @@
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddRazorPages();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    // Add services to the container.
+    builder.Services.AddRazorPages();
+    builder.Services.AddDbContext<SearchOnGithubContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("WebApiDatabase")));
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+var app = builder.Build();
+{
 
-app.UseRouting();
+    // Configure the HTTP request pipeline.
+    if (!app.Environment.IsDevelopment())
+    {
+        app.UseExceptionHandler("/Error");
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
+    }
 
-app.UseAuthorization();
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
 
-app.MapRazorPages();
+    app.UseRouting();
 
-app.Run();
+    app.UseAuthorization();
+
+    app.MapRazorPages();
+
+    app.Run();
+}
